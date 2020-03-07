@@ -10,11 +10,17 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { ComponentsModule } from './components/components.module';
 
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { environment } from '../environments/environment';
+
+const CONFIG_SOCKET: SocketIoConfig = { url: environment.URL_SERVER, options: {} };
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
+    SocketIoModule.forRoot( CONFIG_SOCKET ),
     IonicModule.forRoot(),
     AppRoutingModule,
     ComponentsModule
