@@ -13,6 +13,9 @@ import { ComponentsModule } from './components/components.module';
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 
+import { HttpClientModule } from '@angular/common/http';
+
+
 const CONFIG_SOCKET: SocketIoConfig = { url: environment.URL_SERVER, options: {} };
 
 @NgModule({
@@ -23,7 +26,8 @@ const CONFIG_SOCKET: SocketIoConfig = { url: environment.URL_SERVER, options: {}
     SocketIoModule.forRoot( CONFIG_SOCKET ),
     IonicModule.forRoot(),
     AppRoutingModule,
-    ComponentsModule
+    ComponentsModule,
+    HttpClientModule
   ],
   providers: [
     StatusBar,
