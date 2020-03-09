@@ -9,23 +9,18 @@
                 <div class="photo-container ">
                     <img class="rounded-circle img-raised avatar" src="../assets/img/ryan.jpg" alt="">
                 </div>
-                <!-- <button class="btn btn-primary btn-icon btn-round">
-                  <i class="now-ui-icons ui-2_favourite-28"></i>
-                </button> -->
+
                 <ion-button routerLink="/profile-edit" fill="clear" size="small" shape="round" class=" btnEdit">
                     <ion-icon slot="icon-only" name="create-outline"></ion-icon>
                 </ion-button>
 
 
                 <h3 class="">
-                    Ryan Scheinder
+                    {{ dataProfile.nameComplete }}
                 </h3>
                 <p class="category">Photographer</p>
                 <div class="content">
-                    <div class="social-description">
-                        <h2>26</h2>
-                        <p>Comments</p>
-                    </div>
+
                     <div class="social-description">
                         <h2>26</h2>
                         <p>Comments</p>
@@ -49,8 +44,8 @@
                     </a>
                 </div>
                 <h3 class="title">About me</h3>
-                <h5 class="description">An artist of considerable range, Ryan — the name taken by Melbourne-raised, Brooklyn-based Nick Murphy — writes, performs and records all of his own music, giving it a warm, intimate feel with a solid groove structure. An artist of considerable
-                    range.
+                <h5 class="description">
+                    {{ dataProfile.aboutMe }}.
                 </h5>
                 <div class="row">
                     <div class="col-md-6 ml-auto mr-auto">
