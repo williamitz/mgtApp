@@ -1,12 +1,16 @@
-<ion-header>
-
-    <ion-buttons slot="start">
-        <ion-back-button defaultHref="/login"></ion-back-button>
-    </ion-buttons>
-
-
+<ion-header no-borde class="no-border">
 
     <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-back-button defaultHref="/home"></ion-back-button>
+        </ion-buttons>
+
         <ion-title>{{ titleComponent }}</ion-title>
+
+        <ion-label slot="end">
+            <ion-icon slot="icon-only" size="large" [name]="iconComponent"></ion-icon>
+        </ion-label>
+
     </ion-toolbar>
+
 </ion-header>

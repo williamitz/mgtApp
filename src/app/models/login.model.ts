@@ -1,11 +1,11 @@
 export class LoginModel {
     id: number;
-    userName: string;
-    nameComplete: string;
+    nameUser: string;
+    passwordUser: string;
 
     constructor() {
         this.id = 1;
-        this.userName = '';
-        this.nameComplete = '';
+        this.nameUser = '';
+        this.passwordUser = '';
     }
 }

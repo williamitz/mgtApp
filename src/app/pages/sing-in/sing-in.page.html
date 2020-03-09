@@ -10,7 +10,8 @@
                 <div class="container">
                     <div class="col-md-4 ml-auto mr-auto">
                         <div class="card card-login card-plain">
-                            <form class="form" #frmSingIn="ngForm" id="frmSingIn" (submit)="onSingin()">
+
+                            <form class="form" #frmSingIn="ngForm" id="frmSingIn" (submit)="onSingin(frmSingIn)">
                                 <div class="card-header text-center">
                                     <div class="logo-container">
                                         <img src="../assets/img/now-logo.png" alt="">
@@ -18,48 +19,104 @@
                                     <h5 class="text-center">Crear cuenta</h5>
                                 </div>
                                 <div class="card-body">
-                                    <div class="input-group no-border input-lg">
+
+                                    <div class="input-group no-border ">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">
-                                            <i class="now-ui-icons text_caps-small"></i>
-                                        </span>
+                                                <i class="now-ui-icons text_caps-small"></i>
+                                            </span>
                                         </div>
-                                        <input type="text" placeholder="Nombres" class="form-control" name="name" [(ngModel)]="bodyUser.name" />
+                                        <input type="text" placeholder="Nombres" class="form-control " name="name" #name="ngModel" [(ngModel)]="bodyUser.name" [ngClass]="{'is-invalid': (name.errors?.required || name.errors?.minlength || name.errors?.pattern ) && name.touched,
+                                        'is-valid': !name.errors?.required && !name.errors?.minlength && !name.errors?.pattern && name.touched}" pattern="[a-zA-Z\ áéíóúüñÁÉÍÓÚÜÑ]{0,}" required minlength="3" maxlength="25">
+
+
                                     </div>
 
-                                    <div class="input-group no-border input-lg">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text">
-                                            <i class="now-ui-icons text_caps-small"></i>
-                                        </span>
-                                        </div>
-                                        <input type="text" placeholder="Apellidos" class="form-control" name="surname" [(ngModel)]="bodyUser.surname" />
-                                    </div>
+                                    <small *ngIf="name.errors?.required && name.touched" class="text-danger">
+                                        *Requerido
+                                    </small>
+                                    <small *ngIf="name.errors?.minlength && name.touched" class="text-danger">
+                                        *M&iacute;nimo 3 carcateres
+                                    </small>
+                                    <small *ngIf="name.errors?.pattern && name.touched" class="text-danger">
+                                        *Solo letras
+                                    </small>
 
-                                    <div class="input-group no-border input-lg">
+                                    <div class="input-group no-border ">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">
-                                            <i class="now-ui-icons users_circle-08"></i>
-                                        </span>
+                                                <i class="now-ui-icons text_caps-small"></i>
+                                            </span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Usuario" name="userName" [(ngModel)]="bodyUser.nameUser">
-                                    </div>
+                                        <input type="text" placeholder="Apellidos" class="form-control " name="surname" #surname="ngModel" [(ngModel)]="bodyUser.surname" [ngClass]="{'is-invalid': (surname.errors?.required || surname.errors?.minlength || surname.errors?.pattern ) && surname.touched,
+                                        'is-valid': !surname.errors?.required && !surname.errors?.minlength && !surname.errors?.pattern && surname.touched}" pattern="[a-zA-Z\ áéíóúüñÁÉÍÓÚÜÑ]{0,}" required minlength="3" maxlength="25">
 
-                                    <div class="input-group no-border input-lg">
+                                    </div>
+                                    <small *ngIf="surname.errors?.required && surname.touched" class="text-danger">
+                                        *Requerido
+                                    </small>
+                                    <small *ngIf="surname.errors?.minlength && surname.touched" class="text-danger">
+                                        *M&iacute;nimo 3 carcateres
+                                    </small>
+                                    <small *ngIf="surname.errors?.pattern && surname.touched" class="text-danger">
+                                        *Solo letras
+                                    </small>
+
+                                    <div class="input-group no-border ">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">
-                                            <i class="now-ui-icons objects_key-25"></i>
-                                        </span>
+                                                <i class="now-ui-icons users_circle-08"></i>
+                                            </span>
                                         </div>
-                                        <input type="password" class="form-control" placeholder="Contrase&ntilde;a" name="userPassword" [(ngModel)]="bodyUser.passwordUser">
+                                        <input type="text" placeholder="Usuario (email/telefono)" class="form-control " name="nameUser" #nameUser="ngModel" [(ngModel)]="bodyUser.nameUser" [ngClass]="{'is-invalid': (nameUser.errors?.required || nameUser.errors?.minlength || nameUser.errors?.pattern ) && nameUser.touched,
+                                        'is-valid': !nameUser.errors?.required && !nameUser.errors?.minlength && !nameUser.errors?.pattern && nameUser.touched}" pattern="[a-zA-Z0-9\@\.\-\_]{9,}" required minlength="3" maxlength="25">
+
                                     </div>
+                                    <small *ngIf="nameUser.errors?.required && nameUser.touched" class="text-danger">
+                                        *Requerido
+                                    </small>
+                                    <small *ngIf="nameUser.errors?.minlength && nameUser.touched" class="text-danger">
+                                        *M&iacute;nimo 3 carcateres
+                                    </small>
+                                    <small *ngIf="nameUser.errors?.pattern && nameUser.touched" class="text-danger">
+                                        *Solo letras, n&uacute;meros y @.-_
+                                    </small>
+
+                                    <div class="input-group no-border ">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text">
+                                                <i class="now-ui-icons objects_key-25"></i>
+                                            </span>
+                                        </div>
+                                        <input type="password" placeholder="contrase&ntilde;a " class="form-control " name="passwordUser" #passwordUser="ngModel" [(ngModel)]="bodyUser.passwordUser" [ngClass]="{'is-invalid': (passwordUser.errors?.required || passwordUser.errors?.minlength || passwordUser.errors?.pattern ) && passwordUser.touched,
+                                        'is-valid': !passwordUser.errors?.required && !passwordUser.errors?.minlength && !passwordUser.errors?.pattern && passwordUser.touched}" pattern="(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).*" required minlength="6" maxlength="25">
+
+                                    </div>
+                                    <small *ngIf="passwordUser.errors?.required && passwordUser.touched" class="text-danger">
+                                        *Requerido
+                                    </small>
+                                    <small *ngIf="passwordUser.errors?.minlength && passwordUser.touched" class="text-danger">
+                                        *M&iacute;nimo 3 carcateres
+                                    </small>
+                                    <small *ngIf="passwordUser.errors?.pattern && passwordUser.touched" class="text-danger">
+                                        *Debe tener una minuscula, mayuscula y un n&uacute;mero
+                                    </small>
+
+
 
                                 </div>
                                 <div class="card-footer text-center">
+                                    <button [disabled]="frmSingIn.invalid" class="btn btn-primary btn-round btn-lg btn-block">
+                                        Registrarse
+                                    </button>
 
-                                    <a class="btn btn-primary btn-round btn-lg btn-block">
+                                    <div *ngIf="loading">
+                                        <ion-progress-bar type="indeterminate"></ion-progress-bar>
+                                    </div>
+
+                                    <!-- <a>
                                         Login
-                                    </a>
+                                        </a> -->
                                     <div class="pull-left">
                                         <h6>
                                             <a routerLink="/login" class="link">Inciar sesion</a>

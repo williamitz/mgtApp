@@ -15,10 +15,12 @@ export class WebsocketService {
     this.socket.on('connect', async () => {
 
       console.log('conectado con servidor socket');
-      const res = await this.onLoadUserSingin();
-      if (res.ok) {
-        this.onSingInSocket( res.data )
-      }
+      // if ( ! this.statusServer ) {
+      //   const res = await this.onLoadUserSingin();
+      //   if (res.ok) {
+      //     this.onSingInSocket( res.data );
+      //   }
+      // }
       this.statusServer = true;
     });
 

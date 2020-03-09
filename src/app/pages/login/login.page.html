@@ -67,7 +67,7 @@
                 <div class="container">
                     <div class="col-md-4 ml-auto mr-auto">
                         <div class="card card-login card-plain">
-                            <form class="form" method="" action="">
+                            <form #frmLogin="ngForm" id="frmLogin" class="form" (submit)="onLogin(frmLogin)">
                                 <div class="card-header text-center">
                                     <div class="logo-container">
                                         <img src="../assets/img/now-logo.png" alt="">
@@ -80,22 +80,35 @@
                                                 <i class="now-ui-icons users_circle-08"></i>
                                             </span>
                                         </div>
-                                        <input type="text" class="form-control" placeholder="Usuario" name="userName" [(ngModel)]="bodyLogin.userName">
+                                        <input type="text" class="form-control" placeholder="Usuario" name="userName" #user="ngModel" [(ngModel)]="bodyLogin.nameUser" [ngClass]="{'is-invalid': user.errors?.required && user.touched,
+                                        'is-valid': !user.errors?.required && user.touched}" required>
                                     </div>
+                                    <small class="text-danger" *ngIf="user.errors?.required && user.touched">
+                                        *Requerido
+                                    </small>
                                     <div class="input-group no-border input-lg">
                                         <div class="input-group-prepend">
                                             <span class="input-group-text">
                                                 <i class="now-ui-icons text_caps-small"></i>
                                             </span>
                                         </div>
-                                        <input type="text" placeholder="Apellidos y nombres" class="form-control" name="nameComplete" [(ngModel)]="bodyLogin.nameComplete" />
+                                        <input type="password" placeholder="Contrase&ntilde;a" class="form-control" name="nameComplete" #password="ngModel" [(ngModel)]="bodyLogin.passwordUser" [ngClass]="{'is-invalid': password.errors?.required && password.touched,
+                                        'is-valid': password.errors?.required && password.touched}" required />
                                     </div>
+                                    <small class="text-danger" *ngIf="password.errors?.required && password.touched">
+                                        *Requerido
+                                    </small>
                                 </div>
                                 <div class="card-footer text-center">
 
-                                    <a class="btn btn-primary btn-round btn-lg btn-block" (click)="onLogin()">
+                                    <button type="submit" [disabled]="frmLogin.invalid" class="btn btn-primary btn-round btn-lg btn-block">
                                         Login
-                                    </a>
+                                    </button>
+
+                                    <div *ngIf="loading">
+                                        <ion-progress-bar type="indeterminate"></ion-progress-bar>
+                                    </div>
+
                                     <div class="pull-left">
                                         <h6>
                                             <a class="link" routerLink='/singIn'>Crear cuenta</a>
