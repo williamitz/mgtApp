@@ -15,7 +15,8 @@ const routes: Routes = [
   {
     path: 'singIn',
     loadChildren: () => import('./pages/sing-in/sing-in.module').then( m => m.SingInPageModule)
-  },  {
+  },
+  {
     path: 'profile',
     loadChildren: () => import('./pages/profile/profile.module').then( m => m.ProfilePageModule)
   },
