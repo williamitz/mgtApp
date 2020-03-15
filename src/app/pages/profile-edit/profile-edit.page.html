@@ -4,42 +4,152 @@
 
     <div class="paddingForm">
         <h3>Datos personales</h3>
-        <form action="">
+        <form #frmProfile="ngForm" id="frmProfile" (submit)="onUpdateProfile(frmProfile)">
             <div class="form-row">
 
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-user-circle"></i></div>
+                        <div class="input-group-text">
+                            <i class="fa fa-quote-left" aria-hidden="true"></i>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Left Font Awesome Icon">
+                    <input type="text" class="form-control" placeholder="Nombres" name="nameProfile" #nameProfile="ngModel" [(ngModel)]="bodyProfile.name" pattern="[a-zA-Z\ áéíóúüñÁÉÍÓÚÜÑ]{0,}" required minlength="3" maxlength="25" [ngClass]="{
+                        'is-invalid': (nameProfile.errors?.required || nameProfile.errors?.minlength || nameProfile.errors?.pattern ) && nameProfile.touched,
+                        'is-valid': !nameProfile.errors?.required && !nameProfile.errors?.minlength && !nameProfile.errors?.pattern && nameProfile.touched
+                    }">
                 </div>
+                <small *ngIf="nameProfile.errors?.required && nameProfile.touched" class="text-danger">
+                    *Requerido
+                </small>
+                <small *ngIf="nameProfile.errors?.minlength && nameProfile.touched" class="text-danger">
+                    *M&iacute;nimo 3 caracteres
+                </small>
+                <small *ngIf="nameProfile.errors?.pattern && nameProfile.touched" class="text-danger">
+                    *Solo letras
+                </small>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-user-circle"></i></div>
+                        <div class="input-group-text">
+                            <i class="fa fa-quote-left" aria-hidden="true"></i>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Left Font Awesome Icon">
+                    <input type="text" class="form-control" placeholder="Apellidos" name="surnameProfile" #surnameProfile="ngModel" [(ngModel)]="bodyProfile.surname" required minlength="3" maxlength="25" [ngClass]="{
+                        'is-invalid': (surnameProfile.errors?.required || surnameProfile.errors?.minlength || surnameProfile.errors?.pattern ) && surnameProfile.touched,
+                        'is-valid': !surnameProfile.errors?.required && !surnameProfile.errors?.minlength && !surnameProfile.errors?.pattern && surnameProfile.touched
+                    }">
                 </div>
+                <small *ngIf="surnameProfile.errors?.required && surnameProfile.touched" class="text-danger">
+                    *Requerido
+                </small>
+                <small *ngIf="surnameProfile.errors?.minlength && surnameProfile.touched" class="text-danger">
+                    *M&iacute;nimo 3 caracteres
+                </small>
+                <small *ngIf="surnameProfile.errors?.pattern && surnameProfile.touched" class="text-danger">
+                    *Solo letras
+                </small>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-user-circle"></i></div>
+                        <div class="input-group-text">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Left Font Awesome Icon">
+                    <input type="email" class="form-control" placeholder="Email" name="emailProfile" #emailProfile="ngModel" [(ngModel)]="bodyProfile.email" pattern="[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}" maxlength="40" [ngClass]="{
+                        'is-invalid': (emailProfile.errors?.pattern || emailProfile.errors?.maxlength) && emailProfile.touched,
+                        'is-valid': !emailProfile.errors?.pattern && !emailProfile.errors?.maxlength && emailProfile.touched
+                    }">
                 </div>
+                <small *ngIf="emailProfile.errors?.minlength && emailProfile.touched" class="text-danger">
+                    *M&iacute;ximo 40 caracteres
+                </small>
+                <small *ngIf="emailProfile.errors?.pattern && emailProfile.touched" class="text-danger">
+                    *Email inv&aacute;lido
+                </small>
 
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <div class="input-group-text"><i class="fa fa-user-circle"></i></div>
+                        <div class="input-group-text">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                        </div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Left Font Awesome Icon">
+                    <input type="text" class="form-control" placeholder="(+51) 000 000 000" name="phoneProfile" #phoneProfile="ngModel" [(ngModel)]="bodyProfile.phone" pattern="[0-9\ \(\)\+]{0,}" minlength="9" maxlength="16" [ngClass]="{
+                        'is-invalid': (phoneProfile.errors?.pattern || phoneProfile.errors?.minlength || phoneProfile.errors?.maxlength) && phoneProfile.touched,
+                        'is-valid': !phoneProfile.errors?.pattern && !phoneProfile.errors?.minlength && !phoneProfile.errors?.maxlength && phoneProfile.touched
+                    }">
                 </div>
+                <small *ngIf="phoneProfile.errors?.minlength && phoneProfile.touched" class="text-danger">
+                    *M&iacute;ximo 16 caracteres
+                </small>
+                <small *ngIf="phoneProfile.errors?.minlength && phoneProfile.touched" class="text-danger">
+                    *M&iacute;nimo 9 caracteres
+                </small>
+                <small *ngIf="phoneProfile.errors?.pattern && phoneProfile.touched" class="text-danger">
+                    *Formato (+00) 000 000 000
+                </small>
 
+            </div>
+
+            <div class="row">
+
+                <div class="col-6">
+
+                    <div class="form-group">
+                        <label for="">Sexo</label>
+
+                        <div class="form-check form-check-radio form-check">
+                            <label class="form-check-label">
+                              <input class="form-check-input" 
+                              type="radio" 
+                              name="sexProfile" 
+                              [(ngModel)]="bodyProfile.sex"
+                              id="men" 
+                              value="M"> Masculino
+                              <span class="form-check-sign"></span>
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-radio form-check">
+                            <label class="form-check-label">
+                              <input class="form-check-input" type="radio" name="sexProfile" [(ngModel)]="bodyProfile.sex" id="women" value="F"> Femenino
+                              <span class="form-check-sign"></span>
+                            </label>
+                        </div>
+
+                        <div class="form-check form-check-radio form-check">
+                            <label class="form-check-label">
+                              <input class="form-check-input" type="radio" name="sexProfile" [(ngModel)]="bodyProfile.sex" id="other" value="O"> Otro
+                              <span class="form-check-sign"></span>
+                            </label>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label for="">Fecha nacimiento</label>
+                    <ion-datetime [monthNames]="monthNames" [monthShortNames]="monthNames" class="form-control form-control-lg" no-border displayFormat="DD/MM/YYYY" min="1990-03-14" max="2012-12-09" cancelText="Cerrar" doneText="Aceptar" name="dateBornProfile" [(ngModel)]="bodyProfile.dateBorn"></ion-datetime>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="txtAboutMe">Acerca de mi</label>
+                        <textarea class="form-control" id="txtAboutMe" rows="3" placeholder="Mi descripci&oacute;n" pattern="[a-zA-Z\ \.áéíóúüñÁÉÍÓÚÜÑ]{0,}" name="aboutMe" #aboutMe="ngModel" [(ngModel)]="bodyProfile.aboutMe" [ngClass]="{
+                            'is-invalid': aboutMe.errors?.pattern && aboutMe.touched,
+                            'is-valid': !aboutMe.errors?.pattern && aboutMe.touched 
+                        }"></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class=" text-center">
+
+                <button type="submit" [disabled]="frmProfile.invalid" class="btn btn-primary btn-round btn-lg btn-block">
+                    Guardar cambios
+                </button>
             </div>
         </form>
     </div>
-
-
-
 
 </ion-content>

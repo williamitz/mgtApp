@@ -26,6 +26,30 @@
 </div>
 <ion-content>
 
+    <app-modal-post (createPost)="onNewPost()"></app-modal-post>
+
+
+    <ion-list>
+
+        <ion-card *ngFor="let item of dataPost">
+            <ion-card-header>
+                <ion-card-subtitle>{{ item.created | moment }}</ion-card-subtitle>
+                <ion-card-title>{{ item.message }}</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+                Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean. {{ item.message }}
+            </ion-card-content>
+        </ion-card>
+
+    </ion-list>
+
+    <!-- [disabled]="true" -->
+
+    <ion-infinite-scroll threshold="50px" position="bottom" (ionInfinite)="loadPosts($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando posts...">
+        </ion-infinite-scroll-content>
+    </ion-infinite-scroll>
 
 
 </ion-content>

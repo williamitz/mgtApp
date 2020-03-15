@@ -14,12 +14,16 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 
 import { HttpClientModule } from '@angular/common/http';
+import { MomentPipe } from './pipes/moment.pipe';
+import { PipesModule } from './pipes/pipes.module';
 
 
 const CONFIG_SOCKET: SocketIoConfig = { url: environment.URL_SERVER, options: {} };
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -27,6 +31,7 @@ const CONFIG_SOCKET: SocketIoConfig = { url: environment.URL_SERVER, options: {}
     IonicModule.forRoot(),
     AppRoutingModule,
     ComponentsModule,
+    PipesModule,
     HttpClientModule
   ],
   providers: [

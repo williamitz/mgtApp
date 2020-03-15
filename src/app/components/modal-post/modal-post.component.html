@@ -1,0 +1,53 @@
+<!-- Button trigger modal -->
+<div class="row">
+    <div class="col-12 text-center">
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+          Nuevo post
+        </button>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade " data-backdrop="false" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content border-round">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Nueva publicaci&oacute;n</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onResetForm(frmPost)">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form #frmPost="ngForm" id="frmPost">
+                <div class="modal-body">
+                    <div class="form-row">
+
+                        <ion-item>
+                            <ion-avatar slot="start">
+                                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+                            </ion-avatar>
+                            <textarea name="messagePost" class="form-control" placeholder="Escribe un comentario..." #msgPost="ngModel" [(ngModel)]="bodyPost.message" [ngClass]="{
+                              'is-invalid': msgPost.errors?.required && msgPost.touched,
+                              'is-valid': !msgPost.errors?.required && msgPost.touched
+                            }" required rows="3"></textarea>
+                        </ion-item>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+
+
+                    <button type="button" (click)="onResetForm(frmPost)" id="btnCloseModalPost" class="btn btn-secondary" data-dismiss="modal">
+                      Close
+                    </button>
+
+                    <button type="button" (click)="onSubmitPost(frmPost)" [disabled]="frmPost.invalid" class="btn btn-primary">
+                      <span *ngIf="loading">
+                        <i class="fa fa-spinner fa-pulse "></i>
+                      </span>
+                      Save changes
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
