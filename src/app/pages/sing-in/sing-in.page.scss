@@ -1,3 +1,11 @@
 .bgSingIn {
     background-image: url("../../../assets/img/love-logo.jpg");
 }
+
+ion-item {
+    --background: rgba(255, 255, 255, 0);
+}
+
+.lblChk {
+    color: #FFFF;
+}

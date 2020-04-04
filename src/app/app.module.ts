@@ -3,6 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
 
 import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
+import { IonicStorageModule } from '@ionic/storage';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
@@ -14,9 +15,10 @@ import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { environment } from '../environments/environment';
 
 import { HttpClientModule } from '@angular/common/http';
-import { MomentPipe } from './pipes/moment.pipe';
 import { PipesModule } from './pipes/pipes.module';
-
+import { FormsModule } from '@angular/forms';
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Camera } from '@ionic-native/camera/ngx';
 
 const CONFIG_SOCKET: SocketIoConfig = { url: environment.URL_SERVER, options: {} };
 
@@ -27,16 +29,20 @@ const CONFIG_SOCKET: SocketIoConfig = { url: environment.URL_SERVER, options: {}
   entryComponents: [],
   imports: [
     BrowserModule,
-    SocketIoModule.forRoot( CONFIG_SOCKET ),
-    IonicModule.forRoot(),
     AppRoutingModule,
+    IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
+    SocketIoModule.forRoot( CONFIG_SOCKET ),
     ComponentsModule,
     PipesModule,
+    FormsModule,
     HttpClientModule
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Geolocation,
+    Camera,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
   ],
   bootstrap: [AppComponent]

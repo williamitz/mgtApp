@@ -22,7 +22,7 @@ export class ProfileEditPage implements OnInit {
   ngOnInit() {
     this.bodyProfile = new ProfileModel();
 
-    this.profileSvc.onGetProfile().subscribe( (res: any) => {
+    this.profileSvc.onGetProfile().subscribe( (res) => {
       if (!res.ok) {
         throw new Error( res.error );
       }
@@ -44,7 +44,7 @@ export class ProfileEditPage implements OnInit {
 
     if (frm.valid) {
       await this.onShowLoading();
-      this.profileSvc.onUpdateProfile( this.bodyProfile ).subscribe( async (res: any) => {
+      this.profileSvc.onUpdateProfile( this.bodyProfile ).subscribe( async (res) => {
 
         if (!res.ok) {
           throw new Error( res.error );

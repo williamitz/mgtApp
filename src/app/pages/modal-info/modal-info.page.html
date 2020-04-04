@@ -1,0 +1,88 @@
+<ion-header>
+    <ion-toolbar color="primary">
+        <ion-buttons slot="start">
+            <ion-button (click)="onCloseModalInfo()">
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
+
+        <ion-buttons slot="secondary">
+            <ion-button>
+                <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+            </ion-button>
+            <!-- <ion-button>
+                <ion-icon slot="icon-only" name="search"></ion-icon>
+            </ion-button> -->
+        </ion-buttons>
+        <!-- <ion-buttons slot="primary">
+            <ion-button color="secondary">
+                <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+            </ion-button>
+        </ion-buttons> -->
+        <ion-title> {{ user.nameComplete || '' }} </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+    <ion-grid fixed>
+        <ion-row>
+            <ion-col size="4">
+
+                <ion-avatar style="margin-left: 20px; margin-top: 10px;">
+                    <img src="assets/avatars/{{user.imgUser}}" />
+                </ion-avatar>
+
+            </ion-col>
+            <ion-col size="8">
+
+                <ion-grid fixed>
+                    <ion-row>
+                        <ion-col size="6">
+                            <ion-item>
+                                <ion-label color="primary" class="text-center">
+                                    {{ dataInfo.comunity.followers.length }}
+                                    <p><small>Seguidores</small></p>
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                        <ion-col size="6">
+                            <ion-item>
+                                <ion-label color="primary" class="text-center">
+                                    {{ dataInfo.comunity.followed.length }}
+                                    <p><small>Seguidos</small></p>
+                                </ion-label>
+                            </ion-item>
+                        </ion-col>
+                    </ion-row>
+
+                </ion-grid>
+
+            </ion-col>
+        </ion-row>
+
+        <ion-row>
+            <ion-col size="12">
+                <ion-item>
+                    <ion-label slot="start">
+                        {{ dataInfo.user.nameUser || '' }}
+                        <p> {{ dataInfo.user.aboutMe || 'Lorem ipsum dolor' }} </p>
+                    </ion-label>
+
+                    <ion-button *ngIf="!dataInfo.followed" (click)="onAddFollowed()" expand="full" fill="outline" shape="round" slot="end">
+                        <ion-icon slot="start" name="add"></ion-icon>
+                        Seguir
+                    </ion-button>
+
+
+                    <ion-button *ngIf="dataInfo.followed" (click)="onRemoveFollowed()" expand="full" fill="outline" shape="round" slot="end">
+                        <ion-icon slot="start" name="add"></ion-icon>
+                        Dejar de seguir
+                    </ion-button>
+
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+
+</ion-content>

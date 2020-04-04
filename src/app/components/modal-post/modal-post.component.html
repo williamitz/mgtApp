@@ -1,53 +1,125 @@
 <!-- Button trigger modal -->
-<div class="row">
-    <div class="col-12 text-center">
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-          Nuevo post
-        </button>
-    </div>
-</div>
+<ion-header>
+    <ion-toolbar>
+        <ion-buttons slot="start">
+            <ion-button expand="block" fill="clear" shape="round" (click)="onDismis()">
+                <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+            </ion-button>
+        </ion-buttons>
 
-<!-- Modal -->
-<div class="modal fade " data-backdrop="false" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content border-round">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Nueva publicaci&oacute;n</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="onResetForm(frmPost)">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <form #frmPost="ngForm" id="frmPost">
-                <div class="modal-body">
-                    <div class="form-row">
+        <ion-title>Nueva publicaci&oacute;n</ion-title>
 
+        <ion-buttons slot="end">
+            <ion-button color="primary" (click)="onSubmitPost(frmPost)" [disabled]="frmPost.invalid || loadingCoords || loading">
+                <ion-icon slot="start" name="add"></ion-icon>
+                Compartir
+            </ion-button>
+        </ion-buttons>
+    </ion-toolbar>
+
+</ion-header>
+
+<ion-content>
+
+    <form #frmPost="ngForm" id="frmPost">
+        <div class="">
+
+            <ion-grid fixed>
+                <ion-row>
+                    <ion-col size="12">
                         <ion-item>
                             <ion-avatar slot="start">
-                                <img src="https://gravatar.com/avatar/dba6bae8c566f9d4041fb9cd9ada7741?d=identicon&f=y">
+                                <img src="./assets/avatars/{{ storageSvc.userData.imgUser || 'av-1.png' }}">
                             </ion-avatar>
                             <textarea name="messagePost" class="form-control" placeholder="Escribe un comentario..." #msgPost="ngModel" [(ngModel)]="bodyPost.message" [ngClass]="{
-                              'is-invalid': msgPost.errors?.required && msgPost.touched,
-                              'is-valid': !msgPost.errors?.required && msgPost.touched
-                            }" required rows="3"></textarea>
+                                'is-invalid': msgPost.errors?.required && msgPost.touched,
+                                'is-valid': !msgPost.errors?.required && msgPost.touched
+                              }" required rows="3"></textarea>
                         </ion-item>
-                    </div>
+                    </ion-col>
 
-                </div>
-                <div class="modal-footer">
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size="12">
+                        <ion-item>
+                            <ion-label>
+                                Mi ubicaci&oacute;n
+                            </ion-label>
+                            <ion-spinner *ngIf="loadingCoords" name="bubbles" slot="end"></ion-spinner>
+                            <ion-toggle (ionChange)="onChangeToggle()" color="primary" slot="end"></ion-toggle>
+                        </ion-item>
+                    </ion-col>
+                    <ion-col size="12">
+                        <div #mapPost id="mapPost" class="mapPost" *ngIf="showMap">
+
+                        </div>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row>
+                    <ion-col size="12">
+
+                        <ion-slides mode="ios" scrollbar="ios" [options]="optSlide">
+
+                            <ion-slide *ngIf="loadingPhoto">
+                                <ion-spinner name="bubbles"></ion-spinner>
+                            </ion-slide>
+
+                            <ion-slide *ngFor="let img of tmpImg" class="poster">
+
+                                <ion-card class="poster">
+                                    <img [src]="img | domSanitizer:true" class="imgPoster" alt="">
+                                </ion-card>
+                            </ion-slide>
+                            <!-- <ion-slide>
+                                <ion-card class="poster" (click)="onNewPhoto()">
+                                    <img src="./assets/img/add-photo.png" class="imgPoster" alt="">
+    
+                                </ion-card>
+                            </ion-slide> -->
+                        </ion-slides>
+
+                    </ion-col>
+                </ion-row>
 
 
-                    <button type="button" (click)="onResetForm(frmPost)" id="btnCloseModalPost" class="btn btn-secondary" data-dismiss="modal">
-                      Close
-                    </button>
+            </ion-grid>
 
-                    <button type="button" (click)="onSubmitPost(frmPost)" [disabled]="frmPost.invalid" class="btn btn-primary">
-                      <span *ngIf="loading">
-                        <i class="fa fa-spinner fa-pulse "></i>
-                      </span>
-                      Save changes
-                    </button>
-                </div>
-            </form>
         </div>
-    </div>
-</div>
+        <div class="modal-footer">
+            <ion-grid fixed>
+                <ion-row>
+                    <ion-col size="5">
+                        <span>
+                            <button class="btn btn-primary btn-icon btn-round" (click)="onNewPhoto()">
+                                <i class="fa fa-camera"></i>
+                            </button> &nbsp;
+                            <button class="btn btn-primary btn-icon btn-round" (click)="onOpenFile()">
+                                <i class="fa fa-file-image"></i>
+                            </button>
+                        </span>
+                    </ion-col>
+                    <ion-col size="7">
+                        <div class="text-right">
+                            <button type="button" (click)="onSubmitPost(frmPost)" [disabled]="frmPost.invalid || loadingCoords || loading" class="btn btn-primary">
+                                <span *ngIf="loading">
+                                  <i class="fa fa-spinner fa-pulse "></i>
+                                </span>
+                                Publicar
+                            </button>
+                        </div>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
+
+
+
+            <!-- <button type="button" (click)="onResetForm(frmPost)" id="btnCloseModalPost" class="btn btn-secondary" data-dismiss="modal">
+              Cancelar
+            </button> -->
+
+
+        </div>
+    </form>
+</ion-content>

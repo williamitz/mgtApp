@@ -1,0 +1,53 @@
+<div class="post">
+
+    <ion-item lines="none">
+        <ion-avatar slot="start">
+            <img src="./assets/avatars/{{post.user.imgUser || 'av-1.png'}}" />
+        </ion-avatar>
+
+        <ion-label>
+
+            <h4>{{ post.user.nameComplete }}</h4>
+            <p>
+                {{ post.user.nameUser }}
+            </p>
+        </ion-label>
+        <ion-label slot="end" class="text-right">
+            <small>
+              {{ post.created | moment }}
+            </small>
+        </ion-label>
+    </ion-item>
+    <!-- <ion-slides mode="ios" pager="ios" scrollbar="ios">
+
+        <ion-slide class="image-slide" [style]=" perro1 | domSanitizer ">
+        </ion-slide>
+        <ion-slide class="image-slide" [style]=" perro2 | domSanitizer ">
+        </ion-slide>
+        <ion-slide class="image-slide" [style]=" perro3 | domSanitizer ">
+        </ion-slide>
+    </ion-slides> -->
+
+    <app-map [coords]="post.coords.coordinates"></app-map>
+
+    <ion-item lines="none">
+        <ion-icon slot="start" name="heart"></ion-icon>
+        <ion-icon slot="end" name="add"></ion-icon>
+    </ion-item>
+
+    <ion-item lines="none">
+        <ion-label text-wrap class="textPost"> {{ post.message }} </ion-label>
+    </ion-item>
+
+</div>
+
+<!-- <ion-card *ngFor="let item of dataPost">
+    <ion-card-header>
+        <ion-card-subtitle>{{ item.created | moment }}</ion-card-subtitle>
+        <ion-card-title>{{ item.message }}</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+        Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean. {{ item.message }}
+    </ion-card-content>
+</ion-card> -->

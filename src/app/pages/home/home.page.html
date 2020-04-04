@@ -1,55 +1,52 @@
 <!-- <app-header titleComponent="Inicio" no-border></app-header> -->
-<div class="row">
-    <div class="col-md-12">
-        <nav class="navbar navbar-expand-lg bg-info">
-            <div class="container">
-                <a class="navbar-brand" href="#">Mgt App</a>
-                <span class="nav-item dropdown">
-                    <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown">
-                        <i class="now-ui-icons design_bullet-list-67" aria-hidden="true"></i>
-                        <!-- <i class="now-ui-icons ui-1_settings-gear-63" aria-hidden="true"></i> -->
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
-                        <a class="dropdown-header">Opciones</a>
-                        <a class="dropdown-item" routerLink="/profile" >Mi perfil</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        
-                        <div class="divider"></div>
-                        <a class="dropdown-item" (click)="onLogOut()">Cerrar sesi&oacute;n</a>
-                    </div>
-                </span>
+
+<nav class="navbar navbar-expand-lg bg-info">
+    <div class="container">
+        <a class="navbar-brand" href="#">Mgt App</a>
+        <span class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" id="navbarDropdownMenuLink" data-toggle="dropdown">
+                            <i class="now-ui-icons design_bullet-list-67" aria-hidden="true"></i>
+                            <!-- <i class="now-ui-icons ui-1_settings-gear-63" aria-hidden="true"></i> -->
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-header">Opciones</a>
+                            <a class="dropdown-item" routerLink="/profile" >Mi perfil</a>
+                            <a class="dropdown-item" href="#">Another action</a>
+                            
+                            <div class="divider"></div>
+                            <a class="dropdown-item" (click)="onLogOut()">Cerrar sesi&oacute;n</a>
+                        </div>
+                    </span>
 
 
-            </div>
-        </nav>
     </div>
-</div>
-<ion-content>
+</nav>
 
-    <app-modal-post (createPost)="onNewPost()"></app-modal-post>
+<ion-content color="light">
 
+    <!-- <app-modal-post (createPost)="onNewPost($event)"></app-modal-post> -->
 
-    <ion-list>
+    <ion-refresher slot="fixed" (ionRefresh)="onRefreshPost( $event )" pullFactor="0.8" pullMin="60" pullMax="120">
+        <ion-refresher-content></ion-refresher-content>
+    </ion-refresher>
 
-        <ion-card *ngFor="let item of dataPost">
-            <ion-card-header>
-                <ion-card-subtitle>{{ item.created | moment }}</ion-card-subtitle>
-                <ion-card-title>{{ item.message }}</ion-card-title>
-            </ion-card-header>
+    <app-new-users (showModalInfo)="onShowModalInfo($event)"></app-new-users>
 
-            <ion-card-content>
-                Keep close to Nature's heart... and break clear away, once in awhile, and climb a mountain or spend a week in the woods. Wash your spirit clean. {{ item.message }}
-            </ion-card-content>
-        </ion-card>
+    <app-list-post [dataPost]="dataPost"></app-list-post>
 
-    </ion-list>
 
     <!-- [disabled]="true" -->
 
-    <ion-infinite-scroll threshold="50px" position="bottom" (ionInfinite)="loadPosts($event)">
+    <ion-infinite-scroll #refresherPost threshold="50px" [disabled]="scrollDisabled" position="bottom" (ionInfinite)="loadPosts($event)">
         <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando posts...">
         </ion-infinite-scroll-content>
     </ion-infinite-scroll>
+
+    <ion-fab vertical="bottom" horizontal="center" slot="fixed">
+        <ion-fab-button (click)="onShowModal()">
+            <ion-icon name="add"></ion-icon>
+        </ion-fab-button>
+    </ion-fab>
 
 
 </ion-content>

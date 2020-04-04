@@ -1,6 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import * as moment from 'moment';
 
+moment.locale('es');
 
 @Pipe({
   name: 'moment'
@@ -8,8 +9,6 @@ import * as moment from 'moment';
 export class MomentPipe implements PipeTransform {
 
   transform(value: string): any {
-    console.log(value);
-    moment.locale('es');
     return moment(value).fromNow();
   }
 

@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { LoginModel } from 'src/app/models/login.model';
 import { WebsocketService } from '../../services/websocket.service';
 import { UserService } from '../../services/user.service';
-import { AlertController } from '@ionic/angular';
+import { AlertController, NavController } from '@ionic/angular';
+import { StorageService } from '../../services/storage.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +15,8 @@ export class LoginPage implements OnInit {
   bodyLogin: LoginModel;
   loading = false;
 
-  constructor(private router: Router, private wsSevice: WebsocketService, private userSvc: UserService, private alertCtrl: AlertController) { }
+  // tslint:disable-next-line: max-line-length
+  constructor( private wsSevice: WebsocketService, private userSvc: UserService, private alertCtrl: AlertController, private navCtrl: NavController, private storageSvc: StorageService) { }
 
   ngOnInit() {
     
@@ -35,14 +36,13 @@ export class LoginPage implements OnInit {
 
         if (res.showError !== 0) {
           this.onShowAlert( await this.onGetError( res.showError ) );
-          // this.loading = false;
-          // return;
+
+          await this.storageSvc.onClearStorage();
+
         } else {
 
-          localStorage.setItem('dataUser', JSON.stringify( res.data ));
-          localStorage.setItem('token', res.token);
-          // this.wsSevice.onSingInSocket( this.bodyLogin );
-          this.router.navigate(['/home']);
+          await this.storageSvc.onSaveCredentials( res.token, res.data );
+          this.navCtrl.navigateRoot('/home', { animated: true });
 
         }
 

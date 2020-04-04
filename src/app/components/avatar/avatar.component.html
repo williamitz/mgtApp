@@ -1,0 +1,9 @@
+<ion-slides #slideAvatar mode="ios" pager="false" [options]="slideAvOptions">
+    <ion-slide *ngFor="let avatar of avatars; let index = index;" (click)="onSelectedAvatar(index)">
+        <ion-img src="../assets/avatars/{{avatar.img}}" class=" pick-avatar" [ngClass]="{
+        'pick-avatar-seleccionado': avatar.selected}"></ion-img>
+    </ion-slide>
+
+</ion-slides>
+<div class="swiper-button-next" (click)="onNextAvatar()"></div>
+<div class="swiper-button-prev" (click)="onPrevAvatar()"></div>

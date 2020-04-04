@@ -1,74 +1,100 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
-import { IonInfiniteScroll, ModalController } from '@ionic/angular';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
+import {  ModalController } from '@ionic/angular';
 import { PostService } from '../../services/post.service';
-
+import { IPost } from '../../interfaces/post.interface';
+// import { PostPage } from '../post/post.page';
+import { ModalPostComponent } from '../../components/modal-post/modal-post.component';
+import { StorageService } from '../../services/storage.service';
+import { Subscription } from 'rxjs';
+import { ModalInfoPage } from '../modal-info/modal-info.page';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
 })
-export class HomePage implements OnInit {
-  @ViewChild(IonInfiniteScroll, {static: false}) infinitePost: IonInfiniteScroll;
+export class HomePage implements OnInit, OnDestroy {
+  @ViewChild('btnShowModalPost', {static: true}) btnModal: ElementRef;
 
-  dataPost: any[] = [];
-  page = 1;
+  dataPost: IPost[] = [];
+  // page = 1;
 
-  constructor(private router: Router, private modalCtrl: ModalController, private postSvc: PostService) { }
+  postSbs: Subscription;
+  scrollDisabled = false;
+
+  // tslint:disable-next-line: max-line-length
+  constructor( private modalCtrl: ModalController, private postSvc: PostService, private storageSvc: StorageService) { }
 
   ngOnInit() {
-
-    this.onGetPost();
+    this.loadPosts();
 
   }
 
-  onGetPost() {
-    this.postSvc.onGetPost( this.page ).subscribe( (res: any) => {
-      if (!res.ok) {
-        throw new Error( res.error );
+  async onShowModal() {
+    // document.getElementById('btnShowModalPost').click();
+    const postModal = await this.modalCtrl.create({
+      component: ModalPostComponent,
+      animated: true,
+      componentProps: {
+        key: 'value'
       }
+    });
 
-      this.dataPost = res.data;
-
+    await postModal.present();
+    postModal.onDidDismiss().then( (disModal: any) => {
+      if (disModal.data.ok) {
+        this.dataPost.unshift( disModal.data.newPost );
+      }
     });
   }
 
   onLogOut() {
-    localStorage.removeItem('dataUser');
-    localStorage.removeItem('token');
-    this.router.navigateByUrl('/login');
+
+    this.postSvc.page = 0;
+    this.storageSvc.onClearStorage();
   }
 
-  loadPosts( event: any ) {
-    // console.log(event);
+  loadPosts( event?: any, pull = false ) {
 
-    this.page += 1;
-
-    this.postSvc.onGetPost( this.page ).subscribe( (res: any) => {
+    this.postSbs = this.postSvc.onGetPost( pull ).subscribe( (res) => {
       if (!res.ok) {
         throw new Error( res.error );
       }
-      // const newPosts = res.data;
-      console.log(res);
-      console.log('10 registros mas', this.page);
       this.dataPost.push( ...res.data );
 
-      if (this.dataPost.length === res.total) {
+      if (event) {
         event.target.complete();
-        this.infinitePost.disabled = true;
-        return;
-      } else {
-        event.target.complete();
-        this.infinitePost.disabled = false;
-        return;
+        if (res.data.length === 0) {
+          this.scrollDisabled = true;
+        }
       }
+
     });
 
   }
 
-  onNewPost(  ) {
-    this.onGetPost();
+  onRefreshPost( event: any ) {
+    this.scrollDisabled = false;
+    this.dataPost = [];
+
+    this.loadPosts( event, true );
+    // this.refresherPost.complete();
+  }
+
+  ngOnDestroy() {
+    console.log('destruyendo home page');
+    this.postSbs.unsubscribe();
+  }
+
+  async onShowModalInfo( $event ) {
+    const modal = await this.modalCtrl.create({
+      component: ModalInfoPage,
+      componentProps: {
+        user: $event
+      }
+    });
+
+    await modal.present();
   }
 
 }

@@ -2,15 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MomentPipe } from './moment.pipe';
 import { IonicModule } from '@ionic/angular';
+import { DomSanitizerPipe } from './dom-sanitizer.pipe';
 
 
 
 @NgModule({
   declarations: [
-    MomentPipe
+    MomentPipe,
+    DomSanitizerPipe
   ],
   exports: [
-    MomentPipe
+    MomentPipe,
+    DomSanitizerPipe
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,30 @@
+.avatar {
+    width: 100px;
+    height: 100px;
+}
+
+.swiper-button-prev {
+    position: relative;
+    top: -70px;
+}
+
+.swiper-button-next {
+    position: relative;
+    top: -50px;
+    left: 90%;
+}
+
+.avatar-disabled {
+    background-color: rgba( 223, 219, 218, 0.4) !important;
+}
+
+.pick-avatar {
+    width: 100px;
+    height: 100px;
+    opacity: 0.3;
+}
+
+.pick-avatar-seleccionado {
+    transition: opacity 0.5s linear;
+    opacity: 1 !important;
+}
